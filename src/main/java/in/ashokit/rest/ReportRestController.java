@@ -36,32 +36,31 @@ public class ReportRestController {
 	public List<SearchResponse> search(@RequestBody SearchRequest request) {
 		return service.searchPlans(request);
 	}
-	
-	@PostMapping("/excel")
+
+	@GetMapping("/excel")
 	public void generateExcel(HttpServletResponse response) throws Exception {
-		
+
 		response.setContentType("application/octet-stream");
 		String headerKey = "Content-Disposition";
-		String headerValue = "attachment; filename=Plans.xlsx";
+		String headerValue = "attachment; filename=Plans.xls";
 		response.setHeader(headerKey, headerValue);
-		
+
 		List<SearchResponse> records = service.searchPlans(null);
 		ExcelGenerator excel = new ExcelGenerator();
 		excel.generateExcel(records, response);
 	}
-	
+
 	@GetMapping("/pdf")
 	public void generatePdf(HttpServletResponse httpResponse) throws Exception {
 
-	httpResponse.setContentType("application/pdf");
-	String headerKey = "Content-Disposition";
-	String headerValue = "attachment; filename=Plans.pdf";
-	httpResponse.setHeader(headerKey, headerValue);
+		httpResponse.setContentType("application/pdf");
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=Plans.pdf";
+		httpResponse.setHeader(headerKey, headerValue);
 
-	List<SearchResponse> records = service.searchPlans(null);
-	PdfGenerator pdfGen = new PdfGenerator();
-	pdfGen.generatePdf(records, httpResponse);
+		List<SearchResponse> records = service.searchPlans(null);
+		PdfGenerator pdfGen = new PdfGenerator();
+		pdfGen.generatePdf(records, httpResponse);
 	}
-	
-	
+
 }

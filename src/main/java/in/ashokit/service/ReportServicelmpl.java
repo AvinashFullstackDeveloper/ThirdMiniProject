@@ -70,6 +70,11 @@ public class ReportServicelmpl implements ReportService {
 	}
 
 	private boolean isSearchReqEmpty(SearchRequest request) {
+		
+		if( request == null)
+		{
+			return true;
+		}
 		if (request.getPlanName() != null && !request.getPlanName().equals("")) {
 			return false;
 		}
